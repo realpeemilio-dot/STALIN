@@ -108,7 +108,26 @@ body{background:var(--pv-bg);color:var(--pv-text)}
 .govi-schedule-table tbody tr:nth-child(even){background:#f4f8fc}
 .govi-schedule-empty{padding:18px;border:1px dashed #b8c7d8;border-radius:10px;background:#f8fbff;color:#50657d;font-size:13px}
 @media(max-width:600px){.govi-schedule-actions{width:100%}.govi-schedule-actions .bp{flex:1}}
-</style></head><body>
+</style><style>
+.govi-monitor-simple{background:#fff!important;border:1px solid #d9e3ee!important;border-radius:14px!important;padding:22px!important;max-width:860px!important;margin:16px 0!important}
+.govi-monitor-simple-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding-bottom:16px;border-bottom:1px solid #e6edf4}
+.govi-monitor-simple-kicker{font-size:10px;font-weight:900;letter-spacing:1.2px;color:#1782a8}
+.govi-monitor-simple-head h3{margin:5px 0 5px!important;color:#12345a!important;font-size:21px!important}
+.govi-monitor-simple-head p{margin:0;color:#667b91;font-size:12px;line-height:1.5;max-width:580px}
+.govi-monitor-simple-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:#edf6fb;font-size:23px;flex:0 0 46px}
+.govi-monitor-simple-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:18px}
+.govi-monitor-simple-grid label{display:block;min-width:0}
+.govi-monitor-simple-grid label>span{display:block;font-size:10px;font-weight:900;letter-spacing:.4px;color:#526b83;margin-bottom:6px}
+.govi-monitor-simple-grid input,.govi-monitor-simple-grid select{width:100%;min-height:44px;background:#fff;color:#24364b;border:1px solid #cdd9e5;border-radius:8px;padding:10px 12px;font-size:14px}
+.govi-monitor-simple-grid small{display:block;color:#71859a;font-size:11px;line-height:1.4;margin-top:6px}
+.govi-monitor-full{grid-column:1/-1}
+.govi-monitor-simple-footer{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:20px;padding-top:14px;border-top:1px solid #e6edf4}
+.govi-monitor-simple-footer>span{color:#718398;font-size:11px;line-height:1.4;flex:1;min-width:180px}
+.govi-monitor-simple-footer .bp{width:auto;min-width:190px;margin:0}
+.govi-monitor-simple-msg{font-size:12px;color:#1769aa;margin:10px 0 0}
+@media(max-width:600px){.govi-monitor-simple{padding:15px!important}.govi-monitor-simple-grid{grid-template-columns:1fr}.govi-monitor-full{grid-column:auto}.govi-monitor-simple-head h3{font-size:18px!important}.govi-monitor-simple-footer .bp{width:100%}}
+</style>
+</head><body>
 <div class="screen" id="login"><div class="card-login"><div class="govi-login-brand" id="goviLoginBrand"><img alt="Logo de la empresa" id="goviLoginLogo" style="display:none"/><strong id="goviLoginBrandName">GOVI</strong></div><small style="color:#8aa0c2">SISTEMA DE CONTROL OPERATIVO</small><h2 style="color:#ffcc33">Iniciar Sesión</h2><span class="lbl">USUARIO</span><input id="user" placeholder="Usuario"/><span class="lbl">CONTRASEÑA</span><input id="pass" placeholder="contraseña" type="password"/><button class="btn" onclick="entrar()">Ingresar</button><p id="err" style="color:#ff6b6b;font-size:12px;margin-top:10px"></p><small style="color:#5f7aa5">GRUPO EMPRESARIAL VIP'S</small></div></div>
 <div id="app"><div class="header"><div class="govi-header-brand" id="goviHeaderBrand"><img alt="Logo de la empresa" id="goviHeaderLogo" style="display:none"/><span id="goviHeaderBrandName">GOVI</span></div><div><span id="ulab" style="color:#ffcc33;font-weight:800"></span><button aria-label="Notificaciones" id="goviBell" onclick="ov('notificaciones')" style="margin-left:10px;position:relative;background:#eef6fc;border:1px solid #cbdbea;color:#163d63;padding:8px 11px;border-radius:9px;font-weight:800;cursor:pointer" type="button">🔔 <span id="goviBellCount" style="display:inline-flex;min-width:18px;height:18px;align-items:center;justify-content:center;background:#d92d20;color:#fff;border-radius:20px;font-size:10px;margin-left:3px;padding:0 5px">0</span></button><button onclick="location.reload()" style="margin-left:10px;background:transparent;border:1px solid #2a3a5e;color:#8aa0c2;padding:6px 10px;border-radius:8px">Salir</button></div></div><div class="alert" id="mAlert"></div>
 <div id="welcome">
@@ -234,7 +253,7 @@ body{background:var(--pv-bg);color:var(--pv-text)}
 </div>
 <div class="c hidden" id="notificaciones" style="display:none">
 <div class="pv-pagehead"><div><h1>Centro de notificaciones</h1><p>Consignas y avisos asignados a tu usuario</p></div><span class="pv-badge" id="goviUnreadLabel">0 pendientes</span></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><button class="bp" onclick="goviMarcarTodasLeidas()" style="width:auto" type="button">Marcar todas como leídas</button><button class="bp bw" onclick="ov('consignas')" style="width:auto" type="button">Ver consignas</button></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><button class="bp" onclick="goviMarcarTodasLeidas()" style="width:auto" type="button">Marcar todas como leídas</button><button class="bp bw" onclick="goviAbrirConsignaDesdeAviso(0)" style="width:auto" type="button">Ver consignas</button></div>
 <div id="goviNotificationList"></div>
 </div>
 <div class="c hidden" id="adminUsers"><b>Administración de usuarios</b><button onclick="ov('welcome')" style="float:right;background:transparent;border:0;color:#8aa0c2">X</button>
@@ -821,12 +840,11 @@ var MODULES={
   {id:'guardia',label:'Guardia de turno',type:'text'},
   {id:'resultado',label:'Resultado de la verificación',type:'select',options:['Conforme','Con observaciones','No conforme','Puesto sin cobertura']},
   {id:'novedades',label:'Novedades encontradas',type:'textarea'},{id:'acciones',label:'Acciones tomadas',type:'textarea'}]},
- 'consignas':{title:'Consignas compartidas',help:'Todos los supervisores pueden consultar y actualizar las consignas. Para compartir una consigna con Monitoreo u otros usuarios, escribe sus nombres de usuario separados por comas en el campo de destinatarios adicionales.',fields:[
-  {id:'fecha',label:'Fecha de emisión',type:'date'},{id:'empresa',label:'Empresa',type:'select',options:["PROVIP'S","AERVIP'S",'CLINER VIPS','MUNDIALSEG',"GRUPO EMPRESARIAL VIP'S"]},
-  {id:'cliente',label:'Cliente',type:'text'},{id:'puesto',label:'Puesto',type:'text'},
-  {id:'consigna',label:'Consigna / instrucción',type:'textarea'},{id:'responsable',label:'Responsable de emitir',type:'text'},
-  {id:'vigencia',label:'Vigencia',type:'text'},{id:'estado',label:'Estado',type:'select',options:['Vigente','Pendiente de recepción','Reemplazada','Finalizada']},
-  {id:'destinatariosExtra',label:'Usuarios adicionales (nombres de usuario separados por coma)',type:'text'}]},
+ 'consignas':{title:'Consignas',help:'Registra una consigna con fecha, hora y selecciona quiénes pueden verla.',fields:[
+  {id:'fecha',label:'Fecha',type:'date'},
+  {id:'hora',label:'Hora',type:'time'},
+  {id:'destinatariosExtra',label:'¿Quiénes pueden verla?',type:'select',options:['Todos los usuarios','Guardias','Supervisores','Monitoreo','Operaciones','Administración']},
+  {id:'consigna',label:'Consigna',type:'textarea'}]},
  'comunicados':{title:'Comunicados operativos',help:'Registra avisos generales y comunicaciones dirigidas a los equipos del grupo.',fields:[
   {id:'fecha',label:'Fecha',type:'date'},{id:'hora',label:'Hora',type:'time'},
   {id:'destinatarios',label:'Destinatarios / grupo',type:'text'},{id:'asunto',label:'Asunto',type:'text'},
@@ -2429,7 +2447,7 @@ window.addEventListener('load',function(){
   var box=document.getElementById('goviNotificationList');if(!box)return;var items=readNotices(window.SESSION_USER&&window.SESSION_USER.name);
   items.sort(function(a,b){return (b.ts||0)-(a.ts||0);});
   if(!items.length){box.innerHTML='<div class="reportitem">No tienes notificaciones todavía. Cuando se publique una consigna asignada a tu usuario, aparecerá aquí.</div>';}
-  else{box.innerHTML=items.map(function(n){return '<article class="govi-notice '+(!n.read?'unread':'')+'"><h3>'+esc(n.title||'Notificación GOVI')+'</h3><p>'+esc(n.message||'')+'</p><small>'+esc(n.date||'')+' · Publicado por: '+esc(n.by||'Sistema')+'</small><div class="govi-notice-actions">'+(!n.read?'<button class="bp" type="button" onclick="goviMarcarNotificacionLeida(\''+String(n.id).replace(/[^A-Za-z0-9_-]/g,'')+'\')">Marcar como leída</button>':'<small>Leída</small>')+'<button class="bp bw" type="button" onclick="ov(\'consignas\')">Ver consignas</button></div></article>';}).join('');}
+  else{box.innerHTML=items.map(function(n){return '<article class="govi-notice '+(!n.read?'unread':'')+'"><h3>'+esc(n.title||'Notificación GOVI')+'</h3><p>'+esc(n.message||'')+'</p><small>'+esc(n.date||'')+' · Publicado por: '+esc(n.by||'Sistema')+'</small><div class="govi-notice-actions">'+(!n.read?'<button class="bp" type="button" onclick="goviMarcarNotificacionLeida(\''+String(n.id).replace(/[^A-Za-z0-9_-]/g,'')+'\')">Marcar como leída</button>':'<small>Leída</small>')+'<button class="bp bw" type="button" onclick="goviAbrirConsignaDesdeAviso('+Number(n.consignaId||0)+')">Ver consigna</button></div></article>';}).join('');}
   window.goviActualizarBadge();
  }
  window.goviMarcarNotificacionLeida=function(id){if(!window.SESSION_USER)return;var a=readNotices(window.SESSION_USER.name);a.forEach(function(n){if(String(n.id)===String(id))n.read=true;});writeNotices(window.SESSION_USER.name,a);renderNotices();};
@@ -2437,16 +2455,25 @@ window.addEventListener('load',function(){
  function roleOf(user){var r=String(user&&user.role||'usuario').toLowerCase();return typeof normalizarRolGOVI==='function'?normalizarRolGOVI(r):r;}
  function isRecipient(username,user,record){
   var role=roleOf(user);if(role==='admin'||role==='supervisor')return true;
-  var raw=String(record.destinatariosExtra||'').toLowerCase();var targets=raw.split(/[,;\n]+/).map(function(x){return x.trim();}).filter(Boolean);
+  var raw=String(record.destinatariosExtra||'').toLowerCase();
+  var targets=raw.split(/[,;\n]+/).map(function(x){return x.trim();}).filter(Boolean);
   var uname=String(username||'').toLowerCase(),fullname=String(user.fullName||'').toLowerCase();
-  return targets.some(function(t){return t==='todos'||t==='todos los usuarios'||t===uname||t===fullname||t===role||(t==='monitoreo'&&role==='monitoreo');});
+  var audienceMap={
+   'todos los usuarios':'todos','todos':'todos',
+   'guardias':'guardia','guardia':'guardia','personal de campo':'guardia',
+   'supervisores':'supervisor','supervisor':'supervisor',
+   'monitoreo':'monitoreo','operaciones':'operaciones',
+   'administración':'admin','administracion':'admin','administrador':'admin',
+   'personal administrativo':'oficina','oficina':'oficina'
+  };
+  return targets.some(function(t){var target=audienceMap[t]||t;return target==='todos'||target===uname||target===fullname||target===role;});
  }
  function notifyConsigna(record){
   var users=typeof getUsers==='function'?getUsers():{},author=String(window.SESSION_USER&&window.SESSION_USER.name||'').toUpperCase();
   var by=window.SESSION_USER?(window.SESSION_USER.fullName||window.SESSION_USER.name):'GOVI';
-  var subject=record.puesto||record.cliente||'un puesto de servicio';var body=String(record.consigna||'').trim();if(body.length>240)body=body.slice(0,237)+'…';
+  var subject='Fecha: '+String(record.fecha||'')+' · Hora: '+String(record.hora||'');var body=String(record.consigna||'').trim();if(body.length>240)body=body.slice(0,237)+'…';
   Object.keys(users).forEach(function(username){var u=users[username]||{};if(String(username).toUpperCase()===author||u.estado==='inactivo'||!isRecipient(username,u,record))return;
-   var a=readNotices(username);a.unshift({id:'C'+String(record._id||Date.now())+'_'+String(username).toUpperCase(),kind:'consigna',title:'Nueva consigna publicada',message:'Puesto: '+subject+'. '+body,date:new Date().toLocaleString('es-EC'),ts:Date.now(),by:by,consignaId:record._id,read:false});writeNotices(username,a);
+   var a=readNotices(username);a.unshift({id:'C'+String(record._id||Date.now())+'_'+String(username).toUpperCase(),kind:'consigna',title:'Nueva consigna publicada',message:subject+'. Consigna: '+body,date:new Date().toLocaleString('es-EC'),ts:Date.now(),by:by,consignaId:record._id,read:false});writeNotices(username,a);
    if(window.SESSION_USER&&String(window.SESSION_USER.name).toUpperCase()===String(username).toUpperCase()){renderNotices();showToast('Nueva consigna GOVI',subject+'. '+body);}
   });
  }
@@ -2460,11 +2487,12 @@ window.addEventListener('load',function(){
    var obj={_id:Date.now(),_fechaRegistro:new Date().toLocaleString('es-EC'),_registradoPor:window.SESSION_USER.fullName||window.SESSION_USER.name};
    var empty=true;
    fields.forEach(function(f){var el=document.getElementById('mf_'+f.id);obj[f.id]=el?String(el.value||'').trim():'';if(obj[f.id])empty=false;});
-   if(empty){alert('Completa al menos un campo antes de guardar.');return false;}
+   if(!String(obj.consigna||'').trim()){alert('Escribe el contenido de la consigna antes de publicarla.');return false;}
    var all=[];try{all=JSON.parse(localStorage.getItem(CONSIGNA_KEY)||'[]');if(!Array.isArray(all))all=[];}catch(e){all=[];}
    all.unshift(obj);
    try{localStorage.setItem(CONSIGNA_KEY,JSON.stringify(all));}catch(e){alert('No se pudo guardar la consigna. El almacenamiento del navegador puede estar lleno.');return false;}
    fields.forEach(function(f){var el=document.getElementById('mf_'+f.id);if(el)el.value='';});
+   if(typeof window.goviConsignaSetDefaults==='function')window.goviConsignaSetDefaults();
    if(typeof window.renderModuloRegistros==='function')window.renderModuloRegistros();
    notifyConsigna(obj);
    alert('Consigna publicada. Se generaron notificaciones para los usuarios correspondientes.');
@@ -3280,4 +3308,436 @@ window.addEventListener('load',function(){
  setTimeout(setCount,150);
 })();
 </script>
+<script>
+/* GOVI · Formulario único y simplificado para registrar salidas desde Monitoreo. */
+(function () {
+  'use strict';
+
+  var ACTIVE_KEY = 'govi_rutas_activas_v1';
+  var originalAbrirModulo = window.abrirModulo;
+  var originalRenderModuloRegistros = window.renderModuloRegistros;
+  var originalInitRoute = window.goviInitRoute;
+
+  function leer(key, fallback) {
+    try {
+      var raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (e) { return fallback; }
+  }
+  function guardar(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch (e) { alert('No se pudo guardar la salida. Revisa el espacio disponible en el navegador.'); return false; }
+  }
+  function esc(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fechaHoy() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function horaAhora() {
+    var d = new Date();
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+  function usuarios() {
+    return typeof window.getUsers === 'function' ? window.getUsers() : {};
+  }
+  function esSupervisor(user) {
+    if (!user) return false;
+    var role = typeof window.normalizarRolGOVI === 'function'
+      ? window.normalizarRolGOVI(user.role)
+      : String(user.role || '').toLowerCase();
+    return role === 'supervisor';
+  }
+  function mapaRutas() {
+    var map = leer(ACTIVE_KEY, {});
+    return map && typeof map === 'object' && !Array.isArray(map) ? map : {};
+  }
+  function elementosGenericos() {
+    var panel = document.getElementById('modulePanel');
+    if (!panel) return {};
+    return {
+      form: document.getElementById('moduleForm'),
+      save: panel.querySelector('button.btn[onclick*="guardarRegistroModulo"]'),
+      search: document.getElementById('moduleSearch') ? document.getElementById('moduleSearch').closest('.formgrid') : null,
+      records: document.getElementById('moduleRecords'),
+      description: document.getElementById('moduleDescription'),
+      exports: Array.from(panel.children).find(function (node) {
+        return node.querySelector && node.querySelector('[onclick*="exportarModuloExcel"], [onclick*="exportarModuloCSV"], [onclick*="imprimirModuloPDF"]');
+      }),
+      note: Array.from(panel.querySelectorAll('p')).find(function (p) {
+        return (p.textContent || '').indexOf('Los cambios se actualizan entre pestañas') >= 0;
+      })
+    };
+  }
+  function ocultarGenericos() {
+    var els = elementosGenericos();
+    Object.keys(els).forEach(function (k) { if (els[k]) els[k].style.display = 'none'; });
+  }
+  function restaurarGenericos() {
+    var els = elementosGenericos();
+    Object.keys(els).forEach(function (k) { if (els[k]) els[k].style.display = ''; });
+    var simple = document.getElementById('goviMonitoreoSalidaUnica');
+    if (simple) simple.remove();
+  }
+
+  function refrescarListaSupervisores() {
+    var select = document.getElementById('goviMonSupSimple');
+    if (!select) return;
+    var selected = select.value;
+    var list = usuarios();
+    var keys = Object.keys(list).filter(function (key) { return esSupervisor(list[key]); });
+    keys.sort(function (a, b) {
+      return String(list[a].fullName || a).localeCompare(String(list[b].fullName || b), 'es');
+    });
+    select.innerHTML = '<option value="">Selecciona al supervisor</option>' + keys.map(function (key) {
+      var user = list[key] || {};
+      return '<option value="' + esc(key.toUpperCase()) + '">' + esc(user.fullName || key) + '</option>';
+    }).join('');
+    if (keys.some(function (key) { return key.toUpperCase() === selected; })) select.value = selected;
+    var help = document.getElementById('goviMonSupervisorHelp');
+    if (help) help.textContent = keys.length
+      ? 'La salida se asignará al perfil GOVI del supervisor seleccionado.'
+      : 'No hay supervisores registrados. Administración debe crear sus cuentas y asignarles el rol Supervisor.';
+  }
+
+  function renderFormularioMonitoreo() {
+    if (window.activeModule !== 'monitoreo') return;
+    var panel = document.getElementById('modulePanel');
+    var description = document.getElementById('moduleDescription');
+    if (!panel || !description) return;
+
+    ocultarGenericos();
+    description.textContent = 'Registra la salida del supervisor. La información quedará asignada a su usuario GOVI para que pueda continuar con las visitas y el retorno de ruta.';
+    var title = document.getElementById('moduleTitle');
+    if (title) title.textContent = 'Centro de monitoreo';
+    var form = document.getElementById('goviMonitoreoSalidaUnica');
+    var formNuevo = !form;
+    if (!form) {
+      form = document.createElement('section');
+      form.id = 'goviMonitoreoSalidaUnica';
+      form.className = 'reportitem govi-monitor-simple';
+      description.insertAdjacentElement('afterend', form);
+    }
+    if (formNuevo) form.innerHTML =
+      '<div class="govi-monitor-simple-head"><div><span class="govi-monitor-simple-kicker">REGISTRO DE SALIDA</span><h3>Salida de supervisor</h3><p>Selecciona al supervisor e ingresa la hora, el kilometraje y el destino. La fecha y el usuario que registra se guardan automáticamente.</p></div><span class="govi-monitor-simple-icon">🛣️</span></div>' +
+      '<div class="govi-monitor-simple-grid">' +
+        '<label class="govi-monitor-full"><span>SUPERVISOR QUE SALIÓ</span><select id="goviMonSupSimple"><option value="">Cargando supervisores...</option></select><small id="goviMonSupervisorHelp"></small></label>' +
+        '<label><span>HORA DE SALIDA</span><input id="goviMonHoraSimple" type="time" value="' + horaAhora() + '"></label>' +
+        '<label><span>KILOMETRAJE DE SALIDA</span><input id="goviMonKmSimple" type="number" min="0" step="1" inputmode="numeric" placeholder="Lectura del odómetro"></label>' +
+        '<label class="govi-monitor-full"><span>¿A DÓNDE SALIÓ? / DESTINO</span><input id="goviMonDestinoSimple" type="text" maxlength="160" placeholder="Ej. Puesto asignado, cliente o sector al que se dirige"></label>' +
+      '</div>' +
+      '<div class="govi-monitor-simple-footer"><span>La fecha y el responsable de Monitoreo quedarán registrados automáticamente.</span><button type="button" class="bp bw" id="goviMonRegistrarSimple">Registrar salida</button></div>' +
+      '<p id="goviMonSimpleMsg" class="govi-monitor-simple-msg" aria-live="polite"></p>';
+    refrescarListaSupervisores();
+    var time = document.getElementById('goviMonHoraSimple');
+    if (time && !time.value) time.value = horaAhora();
+    var btn = document.getElementById('goviMonRegistrarSimple');
+    if (btn && !btn.dataset.bound) {
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', registrarSalida);
+    }
+  }
+
+  function registrarSalida() {
+    if (!window.SESSION_USER || !window.tieneAcceso || !window.tieneAcceso('monitoreo')) {
+      alert('No tienes autorización para registrar salidas desde Monitoreo.');
+      return;
+    }
+    refrescarListaSupervisores();
+    var select = document.getElementById('goviMonSupSimple');
+    var supervisorKey = String(select && select.value || '').toUpperCase();
+    var list = usuarios();
+    var supervisorUser = list[supervisorKey];
+    if (!supervisorUser || !esSupervisor(supervisorUser)) {
+      alert('Selecciona un supervisor registrado en GOVI.');
+      return;
+    }
+    var hora = String((document.getElementById('goviMonHoraSimple') || {}).value || '').trim();
+    var kmText = String((document.getElementById('goviMonKmSimple') || {}).value || '').trim();
+    var km = Number(kmText);
+    var destino = String((document.getElementById('goviMonDestinoSimple') || {}).value || '').trim();
+    if (!hora || !kmText || !Number.isFinite(km) || km < 0 || !destino) {
+      alert('Completa la hora, el kilometraje y el destino de salida.');
+      return;
+    }
+    var map = mapaRutas();
+    if (map[supervisorKey]) {
+      alert('El supervisor seleccionado ya tiene una ruta activa. No se creó otra salida.');
+      return;
+    }
+    var operador = window.SESSION_USER.fullName || window.SESSION_USER.name || 'Monitoreo';
+    var ahora = new Date();
+    var route = {
+      id: Date.now(),
+      supervisorUsuario: supervisorKey,
+      supervisor: supervisorUser.fullName || supervisorKey,
+      veh: supervisorUser.vehiculo || supervisorUser.vehiculoAsignado || 'No especificado',
+      fecha: fechaHoy(),
+      horaSalida: hora,
+      kmS: km,
+      kmF: null,
+      tot: null,
+      estado: 'EN RUTA',
+      destinoSalida: destino,
+      obsSalida: 'Destino registrado por Monitoreo: ' + destino,
+      visitas: [],
+      inicioRegistro: ahora.toLocaleString('es-EC'),
+      registroPosterior: true,
+      tipoRegistroSalida: 'REGISTRO DE SALIDA DESDE MONITOREO',
+      salidaRegistradaPor: operador,
+      fechaHoraRegularizacion: ahora.toLocaleString('es-EC'),
+      motivoRegistroPosterior: ''
+    };
+    map[supervisorKey] = route;
+    if (!guardar(ACTIVE_KEY, map)) return;
+    if (typeof window.ak === 'function' && route.veh !== 'No especificado') window.ak(route.veh, km);
+    try {
+      if (window.goviRutaChannel) window.goviRutaChannel.postMessage({ type: 'rutas-actualizadas', at: Date.now() });
+    } catch (e) {}
+    try { window.dispatchEvent(new Event('govi:rutas-actualizadas')); } catch (e) {}
+    var msg = document.getElementById('goviMonSimpleMsg');
+    if (msg) msg.textContent = 'Salida registrada para ' + (supervisorUser.fullName || supervisorKey) + '. La ruta quedó asignada a su usuario GOVI.';
+    if (select) select.value = '';
+    var kmInput = document.getElementById('goviMonKmSimple'); if (kmInput) kmInput.value = '';
+    var destInput = document.getElementById('goviMonDestinoSimple'); if (destInput) destInput.value = '';
+    var timeInput = document.getElementById('goviMonHoraSimple'); if (timeInput) timeInput.value = horaAhora();
+    alert('Salida registrada y asignada al perfil GOVI de ' + (supervisorUser.fullName || supervisorKey) + '.');
+  }
+
+  /* Monitoreo muestra solo el formulario único, sin el registro genérico ni paneles adicionales. */
+  window.renderModuloRegistros = function () {
+    if (window.activeModule === 'monitoreo') {
+      renderFormularioMonitoreo();
+      return;
+    }
+    if (typeof originalRenderModuloRegistros === 'function') {
+      return originalRenderModuloRegistros.apply(this, arguments);
+    }
+  };
+
+  window.abrirModulo = function (id) {
+    if (id !== 'monitoreo') restaurarGenericos();
+    var result = typeof originalAbrirModulo === 'function'
+      ? originalAbrirModulo.apply(this, arguments)
+      : false;
+    if (id === 'monitoreo' && result !== false) renderFormularioMonitoreo();
+    return result;
+  };
+
+  /* Añade el destino a la ruta activa que ve el supervisor al entrar a su cuenta. */
+  if (typeof originalInitRoute === 'function') {
+    window.goviInitRoute = function () {
+      var result = originalInitRoute.apply(this, arguments);
+      var user = window.SESSION_USER || null;
+      if (user && user.role === 'supervisor') {
+        var map = mapaRutas();
+        var route = map[String(user.name || '').toUpperCase()];
+        var summary = document.getElementById('rutaActualResumen');
+        if (route && summary && route.destinoSalida) {
+          summary.innerHTML += '<br><b>Destino:</b> ' + esc(route.destinoSalida);
+        }
+      }
+      return result;
+    };
+  }
+
+  window.addEventListener('storage', function (event) {
+    if (event && event.key === ACTIVE_KEY && window.activeModule === 'monitoreo') renderFormularioMonitoreo();
+  });
+})();
+
+</script>
+
+<script>
+/* GOVI: consignas sencillas, acceso correcto desde notificaciones y lectura por destinatario. */
+(function(){
+  'use strict';
+  var KEY='provips_mod_consignas';
+  var AUDIENCES=['Todos los usuarios','Guardias','Supervisores','Monitoreo','Operaciones','Administración'];
+
+  function cleanText(v){
+    return String(v==null?'':v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+  }
+  function roleOf(user){
+    var raw=cleanText(user&&user.role||'usuario');
+    if(raw.indexOf('guardia')>=0 || raw.indexOf('campo')>=0) return 'guardia';
+    if(raw.indexOf('supervisor')>=0) return 'supervisor';
+    if(raw.indexOf('monitoreo')>=0 || raw.indexOf('monitorista')>=0) return 'monitoreo';
+    if(raw.indexOf('operacion')>=0) return 'operaciones';
+    if(raw.indexOf('admin')>=0) return 'admin';
+    if(raw.indexOf('oficina')>=0 || raw.indexOf('administrativo')>=0) return 'oficina';
+    if(typeof window.normalizarRolGOVI==='function'){
+      try{return cleanText(window.normalizarRolGOVI(raw));}catch(e){}
+    }
+    return raw;
+  }
+  function audienceToken(v){
+    var s=cleanText(v);
+    var map={
+      'todos':'todos','todos los usuarios':'todos','todo el personal':'todos',
+      'guardias':'guardia','guardia':'guardia','personal de campo':'guardia',
+      'supervisores':'supervisor','supervisor':'supervisor',
+      'monitoreo':'monitoreo','operaciones':'operaciones',
+      'administracion':'admin','administrador':'admin','administradores':'admin',
+      'personal administrativo':'oficina','oficina':'oficina'
+    };
+    return map[s]||s;
+  }
+  function readAll(){
+    try{var a=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(a)?a:[];}catch(e){return [];}
+  }
+  function maySee(record,user,username){
+    if(!user)return false;
+    var role=roleOf(user);
+    if(role==='admin'||role==='supervisor')return true;
+    var raw=String(record.destinatariosExtra||'');
+    var targets=raw.split(/[,;\n]+/).map(audienceToken).filter(Boolean);
+    var uname=cleanText(username||user.name||'');
+    var fullname=cleanText(user.fullName||'');
+    return targets.some(function(t){return t==='todos'||t===role||t===uname||t===fullname;});
+  }
+  function visibleRecords(){
+    var user=window.SESSION_USER||{};
+    var role=roleOf(user);
+    var all=readAll();
+    if(role==='admin'||role==='supervisor')return all;
+    return all.filter(function(r){return maySee(r,user,user.name);});
+  }
+  function esc(v){
+    return String(v==null?'':v).replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function setDefaults(){
+    var now=new Date();
+    var date=document.getElementById('mf_fecha');
+    var time=document.getElementById('mf_hora');
+    var audience=document.getElementById('mf_destinatariosExtra');
+    var d=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+    var t=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+    if(date&&!date.value)date.value=d;
+    if(time&&!time.value)time.value=t;
+    if(audience&&!audience.value)audience.value='Todos los usuarios';
+  }
+  window.goviConsignaSetDefaults=setDefaults;
+
+  // Cualquier cuenta autenticada puede abrir el módulo para consultar una consigna que recibió.
+  var oldAccess=window.tieneAcceso;
+  if(typeof oldAccess==='function'){
+    window.tieneAcceso=function(id){
+      if(id==='consignas'&&window.SESSION_USER)return true;
+      return oldAccess.apply(this,arguments);
+    };
+  }
+  // El lector devuelve solo las consignas dirigidas al perfil conectado.
+  var oldGet=window.getModuloRecords;
+  window.getModuloRecords=function(){
+    if(window.activeModule==='consignas')return visibleRecords();
+    return typeof oldGet==='function'?oldGet.apply(this,arguments):[];
+  };
+
+  // Abrir desde la campanita lleva al módulo real, no a una ventana estática que ocultaba todo.
+  window.goviAbrirConsignaDesdeAviso=function(id){
+    var opened=typeof window.abrirModulo==='function' ? window.abrirModulo('consignas') : false;
+    if(opened===false)return false;
+    setTimeout(function(){
+      if(!id)return;
+      var el=document.getElementById('govi-consigna-'+String(id));
+      if(el){
+        el.style.outline='3px solid #f0b429';
+        el.style.background='#fff9e8';
+        if(el.scrollIntoView)el.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    },80);
+    return true;
+  };
+
+  // Mantener el formulario con fecha, hora, audiencia y texto, sin datos adicionales.
+  var oldOpen=window.abrirModulo;
+  if(typeof oldOpen==='function'){
+    window.abrirModulo=function(id){
+      var result=oldOpen.apply(this,arguments);
+      if(id==='consignas'&&result!==false)setDefaults();
+      return result;
+    };
+  }
+
+  // Presentación compacta de las consignas recibidas.
+  var oldRender=window.renderModuloRegistros;
+  window.renderModuloRegistros=function(){
+    if(window.activeModule!=='consignas'){
+      if(typeof oldRender==='function')return oldRender.apply(this,arguments);
+      return;
+    }
+    var box=document.getElementById('moduleRecords');
+    if(!box)return;
+    var search=document.getElementById('moduleSearch');
+    var q=cleanText(search&&search.value||'');
+    var records=visibleRecords().filter(function(r){
+      return !q || cleanText([r.fecha,r.hora,r.destinatariosExtra,r.consigna,r._registradoPor].join(' ')).includes(q);
+    });
+    var canEdit=!!(window.SESSION_USER&&['admin','supervisor','monitoreo'].includes(roleOf(window.SESSION_USER)));
+    if(!records.length){
+      box.innerHTML='<div style="padding:16px;border:1px dashed #cbd5e1;border-radius:10px;color:#64748b;background:#f8fafc">No hay consignas para mostrar a tu usuario.</div>';
+      return;
+    }
+    box.innerHTML=records.map(function(r){
+      var id=Number(r._id)||0;
+      return '<article class="reportitem" id="govi-consigna-'+id+'" style="background:#fff;border:1px solid #dbe4ee;border-left:4px solid #1769aa;padding:14px;margin:10px 0;border-radius:10px">'+
+        '<div style="display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;color:#52657d;font-size:11px"><b>CONSIGNA</b><span>'+esc(r.fecha||'—')+' · '+esc(r.hora||'—')+'</span></div>'+
+        '<p style="margin:10px 0 6px;color:#203047;font-size:14px;white-space:pre-wrap;text-align:left">'+esc(r.consigna||'')+'</p>'+
+        '<div style="font-size:11px;color:#708198">Dirigida a: '+esc(r.destinatariosExtra||'—')+' · Publicada por: '+esc(r._registradoPor||'—')+'</div>'+
+        (canEdit?'<button class="bp bw" type="button" style="width:auto;margin-top:10px" onclick="goviEditarConsigna('+id+')">Editar</button>':'')+
+        '</article>';
+    }).join('');
+  };
+
+  // Edición sencilla de los mismos cuatro datos.
+  window.goviEditarConsigna=function(id){
+    if(!window.SESSION_USER||!['admin','supervisor','monitoreo'].includes(roleOf(window.SESSION_USER))){
+      alert('No tienes permiso para modificar consignas.');return;
+    }
+    var all=readAll(),idx=all.findIndex(function(r){return Number(r._id)===Number(id);});
+    if(idx<0){alert('No se encontró la consigna.');return;}
+    var r=all[idx];
+    var fecha=prompt('Fecha (AAAA-MM-DD):',r.fecha||'');
+    if(fecha===null)return;
+    var hora=prompt('Hora (HH:MM):',r.hora||'');
+    if(hora===null)return;
+    var opciones=AUDIENCES.map(function(x,i){return (i+1)+'. '+x;}).join('\n');
+    var actual=AUDIENCES.indexOf(r.destinatariosExtra);
+    var seleccion=prompt('¿Quiénes pueden verla?\n'+opciones+'\nEscribe el número:',String(actual>=0?actual+1:1));
+    if(seleccion===null)return;
+    var n=parseInt(seleccion,10);
+    if(!Number.isInteger(n)||n<1||n>AUDIENCES.length){alert('Selecciona una opción válida.');return;}
+    var texto=prompt('Consigna:',r.consigna||'');
+    if(texto===null)return;
+    if(!texto.trim()){alert('La consigna no puede quedar vacía.');return;}
+    r.fecha=fecha.trim();r.hora=hora.trim();r.destinatariosExtra=AUDIENCES[n-1];r.consigna=texto.trim();
+    r._editadoPor=window.SESSION_USER.fullName||window.SESSION_USER.name;
+    r._fechaEdicion=new Date().toLocaleString('es-EC');
+    all[idx]=r;
+    try{localStorage.setItem(KEY,JSON.stringify(all));}
+    catch(e){alert('No se pudo actualizar la consigna.');return;}
+    window.renderModuloRegistros();
+    alert('Consigna actualizada.');
+  };
+
+  // Si se vuelve a filtrar, se mantiene el listado corto y legible.
+  var search=document.getElementById('moduleSearch');
+  if(search&&!search.__goviConsignaSearch){
+    search.__goviConsignaSearch=true;
+    search.addEventListener('input',function(){
+      if(window.activeModule==='consignas')window.renderModuloRegistros();
+    });
+  }
+
+  // Corregir el formulario al cargar la aplicación, por si se abre desde un acceso directo.
+  if(window.activeModule==='consignas')setDefaults();
+})();
+</script>
+
 </body></html>
